@@ -1,10 +1,10 @@
-CREATE TABLE tb_instituicao (
+CREATE TABLE instituicao (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     tipo VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE tb_evento (
+CREATE TABLE evento (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(200) NOT NULL,
     data_inicial DATE NOT NULL,
@@ -16,5 +16,5 @@ CREATE TABLE tb_evento (
 
     CONSTRAINT fk_evento_instituicao
         FOREIGN KEY (instituicao_id)
-        REFERENCES tb_instituicao (id)
+        REFERENCES instituicao (id)
 );
