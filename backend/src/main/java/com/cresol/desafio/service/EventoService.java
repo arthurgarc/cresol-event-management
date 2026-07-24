@@ -63,8 +63,17 @@ public class EventoService {
     }
 
     private void validarPeriodo(Evento evento) {
+        LocalDateTime horaAtual = LocalDateTime.now();
         LocalDateTime inicio = LocalDateTime.of(evento.getDataInicial(), evento.getHoraInicial());
         LocalDateTime fim = LocalDateTime.of(evento.getDataFinal(), evento.getHoraFinal());
+
+        if (inicio.isBefore(horaAtual)) {
+            throw new IllegalArgumentException("A hora inicial deve ser maior do que a hora atual.");
+        }
+
+        if (fim.isBefore(horaAtual)) {
+            throw new IllegalArgumentException("A hora final deve ser maior do que a hora atual.");
+        }
 
         if (fim.isBefore(inicio) || fim.isEqual(inicio)) {
             throw new IllegalArgumentException("A data/hora final deve ser posterior à data/hora inicial.");
