@@ -1,6 +1,7 @@
 package com.cresol.desafio.service;
 
 import com.cresol.desafio.entity.Instituicao;
+import com.cresol.desafio.exception.ResourceNotFoundException;
 import com.cresol.desafio.repository.InstituicaoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class InstituicaoService {
     }
 
     public Instituicao buscarPorId(Integer id) {
-        return instituicaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Instituição não encontrada com ID: " + id));
+        return instituicaoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Instituição não encontrada com ID: " + id));
     }
 
     @Transactional

@@ -4,6 +4,7 @@ import com.cresol.desafio.entity.Evento;
 import com.cresol.desafio.entity.Instituicao;
 import com.cresol.desafio.repository.EventoRepository;
 import com.cresol.desafio.repository.InstituicaoRepository;
+import com.cresol.desafio.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,7 @@ public class EventoService {
     }
 
     public Evento buscarPorId(Integer id) {
-        return eventoRepository.findById(id).orElseThrow(() -> new RuntimeException("Evento não encontrado com ID: " + id));
+        return eventoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Evento não encontrado com ID: " + id));
     }
 
     @Transactional
@@ -71,7 +72,7 @@ public class EventoService {
     }
 
     private Instituicao buscarInstituicao(Integer instituicaoId) {
-        return instituicaoRepository.findById(instituicaoId).orElseThrow(() -> new RuntimeException("Instituição não encontrada com ID: " + instituicaoId));
+        return instituicaoRepository.findById(instituicaoId).orElseThrow(() -> new ResourceNotFoundException("Instituição não encontrada com ID: " + instituicaoId));
     }
 
     @Transactional
