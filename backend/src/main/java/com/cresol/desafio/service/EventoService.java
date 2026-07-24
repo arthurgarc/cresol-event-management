@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -70,5 +72,25 @@ public class EventoService {
 
     private Instituicao buscarInstituicao(Integer instituicaoId) {
         return instituicaoRepository.findById(instituicaoId).orElseThrow(() -> new RuntimeException("Instituição não encontrada com ID: " + instituicaoId));
+    }
+
+    @Transactional
+    public void atualizarStatusEventos() {
+
+        LocalDate dataAtual = LocalDate.now();
+        LocalTime horarioAtual = LocalTime.now();
+
+        List<Evento> eventosParaAtivar = eventoRepository.findEventosParaAtivar(dataAtual, horarioAtual);
+        List<Evento> eventosParaInativar = eventoRepository.findEventosParaInativar(dataAtual, horarioAtual);
+
+        if (!eventosParaAtivar.isEmpty()) {
+            eventosParaAtivar.forEach(evento -> evento.setAtivo(true));
+            eventoRepository.saveAll(eventosParaAtivar);
+        }
+
+        if (!eventosParaInativar.isEmpty()) {
+            eventosParaInativar.forEach(evento -> evento.setAtivo(false));
+            eventoRepository.saveAll(eventosParaInativar);
+        }
     }
 }
